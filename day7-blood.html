@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Capital Blood Bank Centre</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f8f9fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: white;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 600px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #2c3e50;
+    }
+
+    label {
+      font-weight: 600;
+      margin-top: 15px;
+      display: block;
+      color: #34495e;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #c0392b;
+    }
+
+    #msg {
+      margin-top: 10px;
+      color: green;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 15px;
+      color: #2c3e50;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body style="; background-color: #f4f4f4; font-family: Arial, sans-serif;">
+<div class="container">
+<h2 style="; color: #2c3e50; text-align: center;">Blood Donor Search</h2>
+<button id="btn" style="; background-color: #3498db; color: white; padding: 10px 15px; border: none; border-radius: 4px;">Get Data From API</button>
+<div id="msg"></div>
+<label for="bloodGroup">Blood Group</label>
+<select id="bloodGroup">
+<option value="">-- Select Blood Group --</option>
+<option value="A+ve">A+ve</option>
+<option value="A-ve">A-ve</option>
+<option value="B+ve">B+ve</option>
+<option value="B-ve">B-ve</option>
+<option value="AB+ve">AB+ve</option>
+<option value="AB-ve">AB-ve</option>
+<option value="o+ve">o+ve</option>
+<option value="o-ve">o-ve</option>
+</select>
+<label for="city">City</label>
+<input id="city" placeholder="Enter City Name" style="; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" type="text"/>
+<button id="search" style="; background-color: #3498db; color: white; padding: 10px 15px; border: none; border-radius: 4px;">Search</button>
+<div id="result"></div>
+</div>
+<script>
+    var personList = [];
+
+    // Get Data from API
+    $("#btn").click(function () {
+      $.ajax({
+        url: "https://webapps.tekstac.com:8443/WebProjects/PersonService/viewPersonListJSON",
+        method: "GET",
+        success: function (data) {
+          if (data.length > 0) {
+            personList = data;
+            $("#msg").text("Data fetched successfully");
+          }
+        }
+      });
+    });
+
+    function getBloodDonorsDetails(city, bloodGroup) {
+      let donors = [];
+      for (let person of personList) {
+        if (person.city.toLowerCase() === city.toLowerCase() &&
+            person.bloodGroup === bloodGroup) {
+          donors.push({
+            name: person.firstName + " " + person.lastName,
+            phoneNumber: person.phoneNumber,
+            address: getAddressString(person)
+          });
+        }
+      }
+      return donors;
+    }
+
+    function getAddressString(person) {
+      return `Door No: ${person.doorNo}, ${person.streetName} (${person.landMark}), ${person.city}, ${person.state} ${person.zipCode}<br>${person.country}`;
+    }
+
+    function displayBloodDonorDetails(donorDetails) {
+      if (donorDetails.length === 0) {
+        return "No blood donors available for the specified city and blood group";
+      }
+
+      let table = `<table>
+        <tr>
+          <th>SI.No</th>
+          <th>Name</th>
+          <th>Contact Number</th>
+          <th>Address</th>
+        </tr>`;
+
+      donorDetails.forEach((donor, index) => {
+        table += `<tr>
+          <td>${index + 1}</td>
+          <td>${donor.name}</td>
+          <td>${donor.phoneNumber}</td>
+          <td>${donor.address}</td>
+        </tr>`;
+      });
+
+      table += `</table>`;
+      return table;
+    }
+
+    $("#search").click(function () {
+      let city = $("#city").val().trim();
+      let bloodGroup = $("#bloodGroup").val();
+      let donors = getBloodDonorsDetails(city, bloodGroup);
+      let resultHtml = displayBloodDonorDetails(donors);
+      $("#result").html(resultHtml);
+    });
+  </script>
+</body>
+</html>

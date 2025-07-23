@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Login/Register</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    form {
+      border: 1px solid #ccc;
+      padding: 20px;
+      width: 350px;
+      margin: auto;
+      display: none;
+      margin-top: 10%;
+      background-color: rgb(69, 146, 146);
+      border-radius: 10px;
+    }
+    input {
+      display: block;
+      margin: 10px 0;
+      width: 100%;
+    }
+    #loginForm {
+      display: block;
+    }
+    a {
+      color: blue;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body style="; background-color: #f4f4f4; font-family: Arial, sans-serif;">
+<form id="loginForm">
+<h2 style="; color: #2c3e50; text-align: center;">Login</h2>
+<input placeholder="Username" required="" style="; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" type="text"/>
+<input placeholder="Password" required="" style="; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" type="password"/>
+<button style="; background-color: #3498db; color: white; padding: 10px 15px; border: none; border-radius: 4px;" type="submit">Login</button>
+<p>Not registered? <a id="showRegister">Create an account</a></p>
+</form>
+<form id="registerForm">
+<h2 style="; color: #2c3e50; text-align: center;">Register</h2>
+<input placeholder="New Username" required="" style="; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" type="text"/>
+<input placeholder=" New Email" required="" style="; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" type="email"/>
+<input placeholder="New Password" required="" style="; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" type="password"/>
+<button style="; background-color: #3498db; color: white; padding: 10px 15px; border: none; border-radius: 4px;" type="submit">Register</button>
+<p>Already registered? <a id="showLogin">Sign In</a></p>
+</form>
+<script>
+   
+      $('#showRegister').click(function (e) {
+        e.preventDefault();
+        $('#loginForm').hide();
+        $('#registerForm').show();
+      });
+
+      $('#showLogin').click(function (e) {
+        e.preventDefault();
+        $('#registerForm').hide();
+        $('#loginForm').show();
+      });
+  
+  </script>
+</body>
+</html>

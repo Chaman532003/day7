@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Document</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
+    input {
+      padding: 8px;
+      margin: 5px;
+      width: 90%;
+    }
+    h1{
+      text-align: center;
+      text-decoration: underline;
+    }
+    #form{
+      background-color: rgb(208, 183, 145);
+      border: 2px solid black;
+      margin: auto;
+      padding: 30px;
+      width: 30%;
+      margin-top: 5%;
+      border-radius: 20px;
+      display: grid;
+    
+    }
+    button{
+      
+      margin: auto;
+    }
+  </style>
+</head>
+<body style="; background-color: #f4f4f4; font-family: Arial, sans-serif;">
+<h1 style="; color: #2c3e50; text-align: center;"> Simple Form for Event handling and DOM Manipulations.</h1>
+<form id="form">
+<label>First Name:</label>
+<input id="firstName" style="; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" type="text"/><br/>
+<label>Last Name:</label>
+<input id="lastName" style="; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" type="text"/><br/>
+<button style="; background-color: #3498db; color: white; padding: 10px 15px; border: none; border-radius: 4px;" type="submit">Submit</button>
+</form>
+<script>
+    
+      
+      
+      $("#firstName, #lastName").focus(function () {
+        $(this).css("background-color", "green");
+      });
+
+    
+      $("#firstName, #lastName").focusout(function () {
+        $(this).css("background-color", "grey");
+      });
+
+      
+      $("#firstName").change(function () {
+        $("#form").append("<p>You have changed the first name</p>");
+      });
+
+      
+      $("#lastName").change(function () {
+        $("#form").append("<p>You have changed the last name</p>");
+      });
+   
+  </script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Color Recognition</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
+    .color-box {
+      width: 400px;
+      height: 400px;
+      margin: 20px auto;
+      border: 2px solid black;
+    }
+
+    .red { background-color: red; }
+    .blue { background-color: blue; }
+    .green { background-color: green; }
+
+    button {
+      padding: 10px;
+      margin: 5px;
+      font-size: 16px;
+    }
+
+    #log {
+      margin-top: 30px;
+      border: 2px dashed #aaa;
+      padding: 10px;
+      width: 300px;
+      margin: auto;
+      font-family: Arial, sans-serif;
+    }
+  </style>
+</head>
+<body style="; background-color: #f4f4f4; font-family: Arial, sans-serif;">
+<h1 style="text-align: center;; color: #2c3e50; text-align: center;">RGB PANEL</h1>
+<div style="text-align:center;">
+<button class="color-btn red" style="; background-color: #3498db; color: white; padding: 10px 15px; border: none; border-radius: 4px;">Red</button>
+<button class="color-btn blue" style="; background-color: #3498db; color: white; padding: 10px 15px; border: none; border-radius: 4px;">Blue</button>
+<button class="color-btn green" style="; background-color: #3498db; color: white; padding: 10px 15px; border: none; border-radius: 4px;">Green</button>
+</div>
+<div class="color-box" id="colorPanel"></div>
+<div id="log">
+<strong>Event Log:</strong>
+<br/>
+</div>
+<script>
+   
+      
+      $('.color-btn').on('click', function () {
+        const colorClass = $(this).attr('class').split(' ')[1]; 
+        $('#colorPanel')
+          .removeClass('red blue green')
+          .addClass(colorClass);
+
+        
+        logEvent(`Button clicked: ${colorClass}`);
+      });
+
+     
+      function logEvent(message) {
+        $('#log').append(`<div>${message}</div>`);
+      }
+    
+  </script>
+</body>
+</html>
